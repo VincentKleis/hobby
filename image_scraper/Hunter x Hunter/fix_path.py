@@ -5,3 +5,5 @@ base_path = "/home/vincent/Programing/Python_learning/HOBBY/image_scraper/Hunter
 
 for volume in listdir(base_path):
     volume_path = f"{base_path}/{volume}"
+
+    
