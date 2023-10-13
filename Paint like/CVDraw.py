@@ -54,21 +54,25 @@ class mouse_tools():
 
     def Mouse_event(self, event, x, y, flags, params):
 
+        # recods x and y at mous down click
         if event == cv.EVENT_LBUTTONDOWN:
             self.drawing = True
             self.ix, self.iy = x, y
         
+        # as mouse is moved draws a triangle where it is moved and 
         elif event == cv.EVENT_MOUSEMOVE:
             if self.drawing == True:
                 if self.mode == "Triangle":
-                    self.draw_triangel(self.prev, (self.ix, self.iy), self.jx-self.ix, 3, [255, 255, 255])
-                    self.draw_triangel(self.prev, (self.ix, self.iy), x-self.ix, 3, [0, 0, 0])
+                    # re draw based on permanent image to create the ilusion of see trough ness
+                    self.prev = self.img.copy()
+                    self.draw_triangel(self.prev, (self.ix, self.iy), (x-self.ix)*2, 3, [0, 0, 0])
                     self.jx = x
 
+        # when mouse is let go draw the triangle to the permanent image
         elif event == cv.EVENT_LBUTTONUP:
             self.drawing = False
             if self.mode == "Triangle":
-                self.draw_triangel(self.img, (self.ix, self.iy), x-self.ix, 3, [0, 0, 0])
+                self.draw_triangel(self.img, (self.ix, self.iy), (x-self.ix)*2, 3, [0, 0, 0])
                 self.prev = self.img.copy()
 
 
