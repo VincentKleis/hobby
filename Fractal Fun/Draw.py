@@ -1,8 +1,5 @@
 import numpy as np
 from PIL import Image
-import cv2
-import math
-import time
 
 class draw():
     def __init__(self, res:tuple) -> None:
