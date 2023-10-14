@@ -1,14 +1,8 @@
 import cv2 as cv
 import numpy as np
-from time import sleep
+from PIL import Image
 
 class mouse_tools():
-    img = np.full((500, 500, 3), 255, np.uint8)
-    prev = np.full((500, 500, 3), 255, np.uint8)
-    drawing = False
-    ix, iy = -1, -1
-    jx = 0
-    mode = "Triangle"
 
     def draw_triangel(self, canvas:list , centerpoint:tuple, sidelenght:int, thickness:int, color):
 
@@ -22,6 +16,7 @@ class mouse_tools():
         image = cv.line(image, left, right, color, thickness)
 
         return image
+    
 
     def stack_based_fill(self, canvas:list, point:tuple, color:list):
             """takes a canvas color and point and changes every pixel of the same color in that regeon to the chosen color
@@ -42,49 +37,30 @@ class mouse_tools():
                     for x in neighbours:
                         if f"{canvas[x[1]][x[0]]}" == f"{pixel_color}":
                             new_front.append(x)
-                            self.img[x[1]][x[0]] = color
-
-                pixels_front = []
-                cv.imshow("Drawline", self.img)
+                            canvas[x[1]][x[0]] = color
 
                 for pixel in new_front:
                     pixels_front.append(pixel)
 
                 new_front = []
 
-    def Mouse_event(self, event, x, y, flags, params):
+def icon_draw(window_size, image):
+    """draws icons at the top of canvas
 
-        # recods x and y at mous down click
-        if event == cv.EVENT_LBUTTONDOWN:
-            self.drawing = True
-            self.ix, self.iy = x, y
-        
-        # as mouse is moved draws a triangle where it is moved and 
-        elif event == cv.EVENT_MOUSEMOVE:
-            if self.drawing == True:
-                if self.mode == "Triangle":
-                    # re draw based on permanent image to create the ilusion of see trough ness
-                    self.prev = self.img.copy()
-                    self.draw_triangel(self.prev, (self.ix, self.iy), (x-self.ix)*2, 3, [0, 0, 0])
-                    self.jx = x
-
-        # when mouse is let go draw the triangle to the permanent image
-        elif event == cv.EVENT_LBUTTONUP:
-            self.drawing = False
-            if self.mode == "Triangle":
-                self.draw_triangel(self.img, (self.ix, self.iy), (x-self.ix)*2, 3, [0, 0, 0])
-                self.prev = self.img.copy()
+    Args:
+        window_size (tuple): size of the application window
+    """
+    brush = Image.open("icons/brush.png")
+    color_palette = Image.open("icons/color-pallete.png")
+    paint_bucket = Image.open("icons/paint-bucket.png")
+    shapes = Image.open("icons/shape.png")
 
 
 
-# main loop
-canvas = mouse_tools()
-cv.namedWindow("image")
-cv.setMouseCallback("image", canvas.Mouse_event)
+def icon_select(coords:tuple):
+    """checks if x and y are on an icon, and if it is, 
+    it animates the pressing of a button
 
-while True:
-    cv.imshow("image", canvas.prev)
-    if cv.waitKey(1) & 0xFF == ord("q") or cv.getWindowProperty("image", cv.WND_PROP_VISIBLE) < 1:
-        break
-
-cv.destroyAllWindows()
+    Args:
+        coords (tuple): the coordinates of the mouse
+    """
