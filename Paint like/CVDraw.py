@@ -44,14 +44,15 @@ class mouse_tools():
 
                 new_front = []
 
-def icon_draw(window_size, image):
+def icon_draw(window, image):
     """draws icons at the top of canvas
 
     Args:
         window_size (tuple): size of the application window
     """
     brush = Image.open("icons/brush.png")
-    color_palette = Image.open("icons/color-pallete.png")
+    brush = np.array(brush)
+    color_palette = Image.open("icons/color-palette.png")
     paint_bucket = Image.open("icons/paint-bucket.png")
     shapes = Image.open("icons/shape.png")
 

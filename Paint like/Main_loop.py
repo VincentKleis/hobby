@@ -2,7 +2,7 @@ import cv2 as cv
 import CVDraw as draw
 import numpy as np
 
-img = np.full((500, 500, 3), 255, np.uint8)
+img = np.full((600, 800, 3), 255, np.uint8)
 prev = img.copy()
 drawing = False
 # start coordinats for mouse
@@ -40,7 +40,9 @@ cv.namedWindow("image")
 cv.setMouseCallback("image", Mouse_event)
 
 while True:
+    draw.icon_draw(canvas, canvas)
     cv.imshow("image", prev)
+    cv.waitKey(1)
     if cv.getWindowProperty("image", cv.WND_PROP_VISIBLE) < 1:
         break
 
