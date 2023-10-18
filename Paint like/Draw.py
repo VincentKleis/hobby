@@ -47,16 +47,12 @@ class mouse_tools():
 
 
 class icons():
-    positions = []
     icons = []
     icon_mode = ""
 
     def __init__(self, window_size):
         for icon in listdir("icosns"):
             self.icons.append(f"icons/{icon}")
-        
-        for y in range(len(self.icons)):
-            self.positions.append([(0, 50*y), (50 ,50*y+50)])
         
         self.icons = [Image.open(icon) for icon in self.icons]
     
