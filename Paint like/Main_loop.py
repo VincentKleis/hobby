@@ -6,8 +6,13 @@ from PIL import Image
 root = tk.Tk()
 root.withdraw()
 
+<<<<<<< HEAD
 img_canv = np.full((500, 500, 3), 255, np.uint8)
 prev_canv = img_canv.copy()
+=======
+img = np.full((600, 800, 3), 255, np.uint8)
+prev = img.copy()
+>>>>>>> c2b19e30a3837d1dada65b2551b2f2ac44aea92e
 drawing = False
 
 # start coordinats for mouse
@@ -70,7 +75,12 @@ cv.namedWindow("image")
 cv.setMouseCallback("image", Mouse_event)
 
 while True:
+<<<<<<< HEAD
     cv.imshow("image", window)
+=======
+    draw.icon_draw(canvas, canvas)
+    cv.imshow("image", prev)
+>>>>>>> c2b19e30a3837d1dada65b2551b2f2ac44aea92e
     cv.waitKey(1)
     if cv.getWindowProperty("image", cv.WND_PROP_VISIBLE) < 1:
         break
